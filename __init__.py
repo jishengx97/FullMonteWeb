@@ -9,8 +9,6 @@ from .vtkFiltersKit import *
 from .vtkImagingKit import *
 from .vtkRenderingKit import *
 from .vtkIOKit import *
-from .vtkOpenGLKit import *
-from .vtkOpenGLKitPython import *
 from .vtkParallelKit import *
 from .vtkWrappingKit import *
 from .vtkInteractionKit import *
