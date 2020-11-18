@@ -68,7 +68,6 @@ six==1.14.0
 soupsieve==2.0
 sqlparse==0.3.1
 sshtunnel==0.1.5
-systemd-python==234
 Twisted==17.9.0
 ufw==0.36
 unattended-upgrades==0.1
