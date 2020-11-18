@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env.eba-9yekccqz.ca-central-1.elasticbeanstalk.com','127.0.0.1/']
+ALLOWED_HOSTS = ['django-env.eba-9yekccqz.ca-central-1.elasticbeanstalk.com','127.0.0.1']
 
 #auth
 LOGIN_REDIRECT_URL='/'
