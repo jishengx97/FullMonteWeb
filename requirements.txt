@@ -16,7 +16,6 @@ configobj==5.0.6
 constantly==15.1.0
 cryptography==2.8
 cycler==0.10.0
-distro-info===0.18ubuntu0.18.04.1
 dj-database-url==0.5.0
 Django==2.1.15
 django-bootstrap4==1.1.1
