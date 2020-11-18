@@ -42,7 +42,6 @@ mpld3==0.3
 netifaces==0.10.4
 numpy==1.18.1
 oauthlib==2.0.6
-PAM==0.4.2
 paramiko==2.7.1
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
