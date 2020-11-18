@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_heroku
 from decouple import config, Csv
 
 print("Executing fullmonte settings.py")
@@ -28,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env.eba-9yekccqz.ca-central-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['django-env.eba-9yekccqz.ca-central-1.elasticbeanstalk.com','127.0.0.1/']
 
 #auth
 LOGIN_REDIRECT_URL='/'
@@ -138,8 +137,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
 #AWS settings
 AWS_ACCESS_KEY_ID = 'AKIAJR332PLI7L4HSPNA'
