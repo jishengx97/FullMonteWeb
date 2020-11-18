@@ -69,7 +69,6 @@ soupsieve==2.0
 sqlparse==0.3.1
 sshtunnel==0.1.5
 Twisted==17.9.0
-unattended-upgrades==0.1
 urllib3==1.25.8
 virtualenv==15.1.0
 vtk==8.1.2
