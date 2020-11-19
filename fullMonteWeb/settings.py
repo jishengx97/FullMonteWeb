@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'fullMonteWeb.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': os.environ.get('DB_NAME', 'postgres'),
-       'USER': os.environ.get('DB_USER', 'postgres'),
-       'PASSWORD': os.environ.get('DB_PASS', 'sql'),
-       'HOST': 'localhost',
-       'PORT': '5432',
+       'NAME': os.environ.get('RDS_DB_NAME', 'postgres'),
+       'USER': os.environ.get('RDS_USERNAME', 'postgres'),
+       'PASSWORD': os.environ.get('RDS_PASSWORD', 'sql'),
+       'HOST':  os.environ.get('RDS_HOSTNAME', 'localhost'),
+       'PORT': os.environ.get('RDS_PORT', '5432'),
     }
 }
 
