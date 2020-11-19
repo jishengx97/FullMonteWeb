@@ -20,7 +20,6 @@ try:
 except OSError:
     pass
 
-from .dvh import dose_volume_histogram as dvh
 from .setup_visualizer import visualizer
 from application.tclGenerator import *
 from django.contrib.auth.views import LoginView
@@ -320,7 +319,6 @@ def fmVisualization(request):
 
     filePath = "/visualization/Meshes/183test21.out.vtk"
 
-    dvhFig = dvh(filePath)
 
     if (meshFileName):
         msg = "Using mesh " + meshFileName
@@ -328,12 +326,8 @@ def fmVisualization(request):
     else:
         msg = "No output mesh was found. Root folder will be loaded for visualization."
 
-    context = {'message': msg, 'dvhFig': dvhFig}
-
     proc = Process(target=visualizer, args=(meshFileName,))
     proc.start()
-
-    return render(request, "visualization.html", context)
 
 # page for viewing and downloading files
 def downloadOutput(request):
