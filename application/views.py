@@ -277,6 +277,34 @@ def fmSimulatorSource(request):
     if not request.user.is_authenticated:
         return redirect('please_login')
 
+    # visualize input mesh
+    # temporily transfer input mesh to Ec2 instance
+    inputMeshFileName = tclInput.objects.filter(user = request.user).latest('id').meshFile.name
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    text_obj = request.session['text_obj']
+    private_key_file = io.StringIO(text_obj)
+    privkey = paramiko.RSAKey.from_private_key(private_key_file)
+    client.connect(hostname=request.session['DNS'], username='ubuntu', pkey=privkey, timeout=10)
+    ftp = client.open_sftp()
+    ftp.chdir('docker_sims/')
+    # transfer mesh in chunks to save memory
+    with ftp.open('./'+inputMeshFileName, 'wb') as ftp_file:
+        with default_storage.open(inputMeshFileName) as mesh_file:
+            for piece in mesh_file.chunks(chunk_size=32*1024*1024):
+                ftp_file.write(piece)
+    ftp.close()
+    
+    # generate ParaView Visualization URL
+    # e.g. http://ec2-35-183-12-167.ca-central-1.compute.amazonaws.com:8080/
+    dns = request.session['DNS']
+    tcpPort = request.session['tcpPort']
+    visURL = "http://" + dns + ":" + tcpPort + "/"
+    # render 3D visualizer
+    text_obj = request.session['text_obj']
+    p = Process(target=visualizer, args=(inputMeshFileName, True, dns, tcpPort, text_obj, ))
+    p.start()
+
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         formset2 = lightSourceSet(request.POST)
@@ -345,6 +373,8 @@ def fmSimulatorSource(request):
             mesh = tclInput.objects.filter(user = request.user).latest('id')
 
             script_path = tclGenerator(request.session, mesh, request.user)
+            client.exec_command('rm -rf ~/docker_sims/'+inputMeshFileName)
+            client.close()
             return HttpResponseRedirect('/application/simulation_confirmation')
 
     # If this is a GET (or any other method) create the default form.
@@ -354,8 +384,10 @@ def fmSimulatorSource(request):
     context = {
         'formset2': formset2,
         'unit': request.session['meshUnit'],
+        'visURL': visURL,
     }
 
+    client.close()
     return render(request, "simulator_source.html", context)
 
 # FullMonte Simulator input confirmation page
